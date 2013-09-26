@@ -205,6 +205,7 @@ function SlotGame() {
         {id: 'sausage-64', title: 'sausage'},
         {id: 'veggie-64', title: 'veggie sausage'}
     ];
+
     // Audio file names
     var audios = [
         {id: 'roll'}, // Played on roll start
@@ -279,6 +280,7 @@ function SlotGame() {
         $('#play').click(function(e) {
             // start game on play button click
             $('h1').text('Firing!');
+            $('#play').hide();
             game.audios[0].play();
             game.restart();
         });
@@ -455,7 +457,8 @@ Game.prototype.update = function() {
         $('<a href="mailto:' + EMAIL_RECIPIENT + '?&subject=' + EMAIL_SUBJECT + '&body=' + EMAIL_BODY + '" class="button button--main" id="order-button">Order it</a>').prependTo('#buttons');
         $('#results').show();
         $('h1').text('Enjoy your ' + results + ' roll!');
-        $('#play').text('FIRE AGAIN! (wuss)').removeClass('button--main').addClass('button--secondary');
+        $('#play').text('FIRE AGAIN! (wuss)').removeClass('button--main').addClass('button--secondary').show();
+
 
         secondary
 
