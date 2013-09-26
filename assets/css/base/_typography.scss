@@ -1,0 +1,43 @@
+$sans : "Helvetica Neue", Helvetica, Arial, sans-serif;
+$serif: Georgia, serif;
+
+body {
+  font-family: $sans;
+  font-size: em($base-font-size);
+  line-height: ($base-line-height / $base-font-size);
+}
+
+// Headings
+
+h1 {
+  font-size: em(32);
+}
+
+h2 {
+  font-size: em(28);
+}
+
+h3 {
+  font-size: em(24);
+}
+
+h4 {
+  font-size: em(20);
+}
+
+h5 {
+  font-size: em(16);
+}
+
+h6 {
+  font-size: em(14);
+}
+
+// Links
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: $link-colour;
+  &:focus { outline: none; }
+}

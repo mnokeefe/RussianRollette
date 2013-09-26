@@ -1,0 +1,21 @@
+$form-padding: 5px;
+
+#{$all-text-inputs} {
+  border: 2px solid $black;
+  display: block;
+  padding: $form-padding;
+  width: 100%;
+}
+
+#{$all-text-inputs-hover} { // Target the :hover pseudo-class
+  background: yellow;
+}
+
+#{$all-text-inputs-focus} { // Target the :focus pseudo-class
+  background: white;
+  border: 2px solid blue;
+}
+
+input[type="submit"], input[type="reset"] {
+  @include button;
+}

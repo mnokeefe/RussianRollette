@@ -1,0 +1,26 @@
+{% block content %} 
+  <div id="container">
+    <h1>Russian Rollette</h1>
+    <div id="reels">
+      <canvas id="canvas1" width="70" height="300"></canvas>
+      <canvas id="canvas2" width="70" height="300"></canvas>
+      <canvas id="canvas3" width="70" height="300"></canvas>
+      <!-- Loading overlay -->
+      <div id="loading">
+        <p>Loading..</p>
+        <div id="progressbar">
+          <div id="progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="results">
+    </div>
+    <div id="buttons" class="buttons">
+      <button id="play" class="button button--main">FIRE!</button>
+    </div>
+  </div>
+
+  <input id="debug" class="button button--secondary" type="button" value="Toggle Reels"/>
+  <span id="audio_debug">Audio not supported</span>
+{% endblock %}
