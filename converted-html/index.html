@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Title block allowing child pages to override -->
+    <title>Sequence Russian Rollette</title>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+
+    <meta name="interface" content="desktop"/>
+    <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+    <!-- Styles -->
+    <link href="assets/css/all.min.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Style block allowing child pages to inject their own styles -->
+    
+  </head>
+  <body>
+    <div id="viewport">
+      <!-- Content block, child page inject content -->
+       
+  <div id="container">
+    <h1>Russian Rollette</h1>
+    <div id="reels">
+      <canvas id="canvas1" width="70" height="300"></canvas>
+      <canvas id="canvas2" width="70" height="300"></canvas>
+      <canvas id="canvas3" width="70" height="300"></canvas>
+      <!-- Loading overlay -->
+      <div id="loading">
+        <p>Loading..</p>
+        <div id="progressbar">
+          <div id="progress"></div>
+        </div>
+      </div>
+    </div>
+    <div id="results">
+    </div>
+    <div id="buttons" class="buttons">
+      <button id="play" class="button button--main">FIRE!</button>
+    </div>
+  </div>
+  <input id="debug" class="button button--secondary" type="button" value="Toggle Reels"/>
+  <span id="audio_debug">Audio not supported</span>
+
+    </div>
+    <!-- Script block allowing child pages to inject their own scripts -->
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="assets/js/slot.min.js"></script>
+    <script type="text/javascript">$(function () { SlotGame(); });</script>
+  </body>
+</html>

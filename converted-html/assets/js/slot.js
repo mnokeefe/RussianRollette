@@ -47,7 +47,7 @@ function preloadImages( images, callback ) {
 
     function _preload( asset, doneCallback ) {
         asset.img = new Image();
-        asset.img.src = '/assets/img/' + asset.id+'.png';
+        asset.img.src = 'assets/img/' + asset.id+'.png';
 
         asset.img.addEventListener("load", function() {
             doneCallback();
@@ -68,7 +68,7 @@ function _initWebAudio( AudioContext, format, audios, callback ) {
 
     function _preload( asset, doneCallback ) {
         var request = new XMLHttpRequest();
-        request.open('GET',  '/assets/audio/' + asset.id + '.' + format, true);
+        request.open('GET',  'assets/audio/' + asset.id + '.' + format, true);
         request.responseType = 'arraybuffer';
 
         request.onload = function() {
@@ -107,7 +107,7 @@ function _initHTML5Audio( format, audios, callback ) {
     preloader( audios, _preload, callback);
 
     function _preload( asset, doneCallback ) {
-        asset.audio = new Audio( '/assets/audio/' + asset.id + '.' + format);
+        asset.audio = new Audio( 'assets/audio/' + asset.id + '.' + format);
         asset.audio.preload = 'auto';
         asset.audio.addEventListener("loadeddata", function() {
             // Loaded ok, set play function in object and set default volume
@@ -166,18 +166,11 @@ var IMAGE_TOP_MARGIN = 5;
 var IMAGE_BOTTOM_MARGIN = 5;
 var SLOT_SEPARATOR_HEIGHT = 2;
 var SLOT_HEIGHT = IMAGE_HEIGHT + IMAGE_TOP_MARGIN + IMAGE_BOTTOM_MARGIN + SLOT_SEPARATOR_HEIGHT; // how many pixels one slot image takes
-var RUNTIME = 3000; // how long all slots spin before starting countdown
+var RUNTIME = 2000; // how long all slots spin before starting countdown
 var SPINTIME = 1000; // how long each slot spins at minimum
-var ITEM_COUNT = 6; // item count in slots
+var ITEM_COUNT = 8; // item count in slots
 var SLOT_SPEED = 15; // how many pixels per second slots roll
 var DRAW_OFFSET = 45; // how much draw offset in slot display from top
-
-var BLURB_TBL = [
-    'No win!',
-    'Good!',
-    'Excellent!',
-    'JACKPOT!'
-];
 
 function copyArray( array ) {
     var copy = [];
@@ -203,19 +196,21 @@ function SlotGame() {
     var game = new Game();
 
     var items = [
-        {id: 'energy-64'},
-        {id: 'staff-64'},
-        {id: 'cash-64'},
-        {id: 'build-64'},
-        {id: 'goods-64'},
-        {id: 'gold-64'}
+        {id: 'bacon-64', title: 'bacon'},
+        {id: 'blackpudding-64', title: 'black pudding'},
+        {id: 'cheese-64', title: 'cheese'},
+        {id: 'egg-64', title: 'egg'},
+        {id: 'mushroom-64', title: 'mushroom'},
+        {id: 'onion-64', title: 'onion'},
+        {id: 'sausage-64', title: 'sausage'},
+        {id: 'veggie-64', title: 'veggie sausage'}
     ];
+
     // Audio file names
     var audios = [
-        {id: 'roll'}, // Played on roll tart
+        {id: 'roll'}, // Played on roll start
         {id: 'slot'}, // Played when reel stops
-        {id: 'win'},  // Played on win
-        {id: 'nowin'}  // Played on loss
+        {id: 'win'},  // Played on result
     ];
 
     $('canvas').attr('height', IMAGE_HEIGHT * ITEM_COUNT * 2);
@@ -285,6 +280,7 @@ function SlotGame() {
         $('#play').click(function(e) {
             // start game on play button click
             $('h1').text('Firing!');
+            $('#play').hide();
             game.audios[0].play();
             game.restart();
         });
@@ -335,7 +331,7 @@ function Game() {
     this.draw( true );
 }
 
-// Restar the game and determine the stopping locations for reels
+// Restart the game and determine the stopping locations for reels
 Game.prototype.restart = function() {
     this.lastUpdate = new Date();
     this.speed1 = this.speed2 = this.speed3 = SLOT_SPEED
@@ -346,11 +342,6 @@ Game.prototype.restart = function() {
             if ( items[i].id == id ) return i;
         }
     }
-
-    // uncomment to get always jackpot
-    //this.result1 = _find( this.items1, 'gold-64' );
-    //this.result2 = _find( this.items2, 'gold-64' );
-    //this.result3 = _find( this.items3, 'gold-64' );
 
     // get random results
     this.result1 = parseInt(Math.random() * this.items1.length)
@@ -368,6 +359,7 @@ Game.prototype.restart = function() {
     this.offset3 = -parseInt(Math.random( ITEM_COUNT )) * SLOT_HEIGHT;
 
     $('#results').hide();
+    $('#order-button').remove();
 
     this.state = 1;
 }
@@ -451,28 +443,26 @@ Game.prototype.update = function() {
         }
         break;
     case 5: // slots stopped
-        if ( now - this.lastUpdate > 3000 ) {
+        if ( now - this.lastUpdate > 1000 ) {
             this.state = 6;
         }
     break;
     case 6: // check results
-        var ec = 0;
 
+        var results = that.items1[that.result1].title + ', ' + that.items2[that.result2].title + ' and ' + that.items3[that.result3].title;
+        var EMAIL_RECIPIENT = "kaleigh.simms@sequence.co.uk";
+        var EMAIL_SUBJECT = "Roll%20Order";
+        var EMAIL_BODY = "Hi Kaleigh, I'd like a " + results + " roll please.";
+
+        $('<a href="mailto:' + EMAIL_RECIPIENT + '?&subject=' + EMAIL_SUBJECT + '&body=' + EMAIL_BODY + '" class="button button--main" id="order-button">Order it</a>').prependTo('#buttons');
         $('#results').show();
-        if (that.items1[that.result1].id == 'gold-64') ec++;
-        if (that.items2[that.result2].id == 'gold-64') ec++;
-        if (that.items3[that.result3].id == 'gold-64') ec++;
-        $('#multiplier').text(ec);
-        $('#status').text(BLURB_TBL[ec]);
+        $('h1').text('Enjoy your ' + results + ' roll!');
+        $('#play').text('FIRE AGAIN! (wuss)').removeClass('button--main').addClass('button--secondary').show();
 
-        if ( ec ) {
-            // Play win sound
-            this.audios[2].play();
-        } else {
-            // Play no-win sound
-            this.audios[3].play();
-        }
 
+        secondary
+
+        this.audios[2].play();
         this.state = 7;
     break;
         case 7: // game ends

@@ -47,7 +47,7 @@ function preloadImages( images, callback ) {
 
     function _preload( asset, doneCallback ) {
         asset.img = new Image();
-        asset.img.src = '/assets/img/' + asset.id+'.png';
+        asset.img.src = 'assets/img/' + asset.id+'.png';
 
         asset.img.addEventListener("load", function() {
             doneCallback();
@@ -68,7 +68,7 @@ function _initWebAudio( AudioContext, format, audios, callback ) {
 
     function _preload( asset, doneCallback ) {
         var request = new XMLHttpRequest();
-        request.open('GET',  '/assets/audio/' + asset.id + '.' + format, true);
+        request.open('GET',  'assets/audio/' + asset.id + '.' + format, true);
         request.responseType = 'arraybuffer';
 
         request.onload = function() {
@@ -107,7 +107,7 @@ function _initHTML5Audio( format, audios, callback ) {
     preloader( audios, _preload, callback);
 
     function _preload( asset, doneCallback ) {
-        asset.audio = new Audio( '/assets/audio/' + asset.id + '.' + format);
+        asset.audio = new Audio( 'assets/audio/' + asset.id + '.' + format);
         asset.audio.preload = 'auto';
         asset.audio.addEventListener("loadeddata", function() {
             // Loaded ok, set play function in object and set default volume
