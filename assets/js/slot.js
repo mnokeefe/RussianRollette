@@ -7,11 +7,11 @@ function updateProgress( inc ) {
     progressCount += (inc || 1);
     if ( progressCount >= progressTotalCount ) {
         // done, complete progress bar and hide loading screen
-        $('#progress').css('width', '100%');
-        $('#loading').slideUp(600);
+        $('.js-progress').css('width', '100%');
+        $('.js-loading').slideUp(600);
     } else {
         // Update progress bar
-        $('#progress').css('width', parseInt( 100 * progressCount / progressTotalCount)  + '%');
+        $('.js-progress').css('width', parseInt( 100 * progressCount / progressTotalCount)  + '%');
     }
 }
 
@@ -142,17 +142,17 @@ function initAudio( audios, callback ) {
     var AudioContext = window.webkitAudioContext || window.mozAudioContext || window.MSAudioContext || window.AudioContext;
 
     if ( AudioContext ) {
-        $('#audio_debug').text('WebAudio Supported');
+        $('.js-audio-debug').text('WebAudio Supported');
         // Browser supports webaudio
         // https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html
         return _initWebAudio( AudioContext, format, audios, callback );
     } else if ( elem ) {
-        $('#audio_debug').text('HTML5 Audio Supported');
+        $('.js-audio-debug').text('HTML5 Audio Supported');
         // HTML5 Audio
         // http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#the-audio-element
         return _initHTML5Audio(format, audios, callback);
     } else {
-        $('#audio_debug').text('Audio NOT Supported');
+        $('.js-audio-debug').text('Audio NOT Supported');
         // audio not supported
         audios.forEach(function(item) {
             item.play = function() {}; // dummy play
@@ -277,10 +277,10 @@ function SlotGame() {
         // Start game loop
         game.loop();
 
-        $('#play').click(function(e) {
+        $('.js-play').click(function(e) {
             // start game on play button click
             $('h1').text('Firing!');
-            $('#play').hide();
+            $('.js-play').hide();
             game.audios[0].play();
             game.restart();
         });
@@ -289,12 +289,12 @@ function SlotGame() {
 
     // Show reels for debugging
     var toggleReels = 1;
-    $('#debug').click(function() {
+    $('.js-debug').click(function() {
         toggleReels = 1 - toggleReels;
         if ( toggleReels ) {
-            $('#reels').css('overflow', 'hidden' );
+            $('.js-reels').css('overflow', 'hidden' );
         } else {
-            $('#reels').css('overflow', 'visible' );
+            $('.js-reels').css('overflow', 'visible' );
         }
     });
 }
@@ -302,9 +302,9 @@ function SlotGame() {
 function Game() {
 
     // reel canvases
-    this.c1 = $('#canvas1');
-    this.c2 = $('#canvas2');
-    this.c3 = $('#canvas3');
+    this.c1 = $('.js-canvas1');
+    this.c2 = $('.js-canvas2');
+    this.c3 = $('.js-canvas3');
 
     // set random canvas offsets
     this.offset1 = -parseInt(Math.random() * ITEM_COUNT ) * SLOT_HEIGHT;
@@ -358,7 +358,7 @@ Game.prototype.restart = function() {
     this.offset2 = -parseInt(Math.random( ITEM_COUNT )) * SLOT_HEIGHT;
     this.offset3 = -parseInt(Math.random( ITEM_COUNT )) * SLOT_HEIGHT;
 
-    $('#results').hide();
+    $('.js-results').hide();
     $('#order-button').remove();
 
     this.state = 1;
@@ -454,10 +454,10 @@ Game.prototype.update = function() {
         var EMAIL_SUBJECT = "Roll%20Order";
         var EMAIL_BODY = "Hi Kaleigh, I'd like a " + results + " roll please.";
 
-        $('<a href="mailto:' + EMAIL_RECIPIENT + '?&subject=' + EMAIL_SUBJECT + '&body=' + EMAIL_BODY + '" class="button button--main" id="order-button">Order it</a>').prependTo('#buttons');
-        $('#results').show();
+        $('<a href="mailto:' + EMAIL_RECIPIENT + '?&subject=' + EMAIL_SUBJECT + '&body=' + EMAIL_BODY + '" class="button button--main" id="order-button">Order it</a>').prependTo('.js-buttons');
+        $('.js-results').show();
         $('h1').text('Enjoy your ' + results + ' roll!');
-        $('#play').text('FIRE AGAIN! (wuss)').removeClass('button--main').addClass('button--secondary').show();
+        $('.js-play').text('FIRE AGAIN! (wuss)').removeClass('button--main').addClass('button--secondary').show();
 
 
         secondary
