@@ -15,31 +15,31 @@
     
   </head>
   <body>
-    <div id="viewport">
+    <div class="viewport">
       <!-- Content block, child page inject content -->
        
-  <div id="container">
-    <h1>Russian Rollette</h1>
-    <div id="reels">
-      <canvas id="canvas1" width="70" height="300"></canvas>
-      <canvas id="canvas2" width="70" height="300"></canvas>
-      <canvas id="canvas3" width="70" height="300"></canvas>
+  <div class="container">
+    <h1>In mother Russia, roll chooses you.</h1>
+    <div class="js-reels reels">
+      <canvas class="js-canvas1" width="70" height="300"></canvas>
+      <canvas class="js-canvas2" width="70" height="300"></canvas>
+      <canvas class="js-canvas3" width="70" height="300"></canvas>
       <!-- Loading overlay -->
-      <div id="loading">
+      <div class="js-loading loading">
         <p>Loading..</p>
-        <div id="progressbar">
-          <div id="progress"></div>
+        <div class="progressbar">
+          <div class="js-progress progress"></div>
         </div>
       </div>
     </div>
-    <div id="results">
+    <div class="js-results results">
     </div>
-    <div id="buttons" class="buttons">
-      <button id="play" class="button button--main">FIRE!</button>
+    <div class="js-buttons">
+      <button class="js-play button button--main">FIRE!</button>
     </div>
   </div>
-  <input id="debug" class="button button--secondary" type="button" value="Toggle Reels"/>
-  <span id="audio_debug">Audio not supported</span>
+  <input class="js-debug button button--secondary" type="button" value="Toggle Reels"/>
+  <span class="js-audio-debug">Audio not supported</span>
 
     </div>
     <!-- Script block allowing child pages to inject their own scripts -->
